@@ -3,15 +3,12 @@ body {
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to right, #74ebd5, #ACB6E5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
 .login-box {
   background: white;
   padding: 30px;
+  margin: 20vh auto;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   width: 350px;
