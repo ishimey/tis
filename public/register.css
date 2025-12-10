@@ -25,6 +25,8 @@ input:focus{
   border: 2px solid #0083b0;
 }
 
+
+
 .error{
   border: 2px solid red;
 }
