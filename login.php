@@ -2,20 +2,20 @@
 $connection = new mysqli("localhost", "root", "", "tourism");
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $email = $_POST["email"];
-  $password = $_POST["password"];
-  $encrypt = md5($password);
-  $query = "SELECT name from users WHERE email = '$email' AND password = '$encrypt'";
-  $result = mysqli_query($connection, $query);
-  if (mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result); 
-    $_SESSION['username'] = $row['name'];
-    header("location: index.php");
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $encrypt = md5($password);
+    $query = "SELECT username from users WHERE email = '$email' AND password = '$encrypt'";
+    $result = mysqli_query($connection, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION["username"] = $row["username"];
+        header("location: index.php");
+        exit();
+    } else {
+        echo "invalid username poassword";
+    }
     exit();
-  } else {
-    echo "invalid username poassword";
-  }
-  exit();
 }
 ?>
 

@@ -1,5 +1,6 @@
-<?php 
+<?php
 session_start();
+$conn = mysqli_connect("localhost", "root", "", "tourism");
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +9,7 @@ session_start();
   <meta charset="UTF-8">
   <title>Discover Nepal's Beauty</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  
+
 
 
   <style>
@@ -170,12 +171,12 @@ session_start();
       <li><a href="destinations.php">Destinations</a></li>
       <li><a href="hotels.php">Hotels</a></li>
       <li><a href="contacts.php">Contact</a></li>
-      <?php if(isset($_SESSION['username'])){ ?>
-<li class="username" ><?php echo $_SESSION['username'] ?></li>
+      <?php if (isset($_SESSION["username"])) { ?>
+<li class="username" ><?php echo $_SESSION["username"]; ?></li>
         <li><a href="logout.php">logout</a></li>
-      <?php }else{ ?>
+      <?php } else { ?>
       <li><a href="login.php">Login</a></li>
-      <?php }?>
+      <?php } ?>
     </ul>
   </nav>
 
@@ -186,39 +187,26 @@ session_start();
 
   <!-- Destinations Section -->
   <section class="destinations">
-
+      <?php
+      $sql = "SELECT * FROM destination";
+      $result = mysqli_query($conn, $sql);
+      while ($row = mysqli_fetch_assoc($result)) { ?>
     <div class="card">
-      <img src="public/img1.png" alt="Himalayas">
+        <img src="<?php echo $row["imageURL"]; ?>" alt="<?php $row[
+    "destination"
+]; ?>">
       <div class="card-content">
-        <h3>Himalayas</h3>
-        <p>Explore the breathtaking Himalayan ranges and trekking adventures. Mountains are large natural elevations rising higher than the surrounding area.</p>
+          <h3><?php echo $row["destination"]; ?></h3>
+          <div>
+              <p><?php echo $row["description"]; ?></p>
+              <a href="destinations.php?query=<?php echo $row[
+                  "destinationID"
+              ]; ?>">view more</a>
+          </div>
       </div>
     </div>
-
-    <div class="card">
-      <img src="public/img4.png" alt="Chitwan">
-      <div class="card-content">
-        <h3>Chitwan</h3>
-        <p>Famous for jungle safari and wildlife experiences and cultural experiences of the Tharu community. Mesmerizing Narayani river holds religious importance with many temples and festivals along its banks.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="public/img3.png" alt="Pokhara">
-      <div class="card-content">
-        <h3>Pokhara</h3>
-        <p>City of lakes, adventure sports, and serene natural beauty. Nestled at the foothills of the Annapurna mountain range and perfect for both relaxation and adventure.</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="public/img2.png" alt="Lumbini">
-      <div class="card-content">
-        <h3>Lumbini</h3>
-        <p>The sacred birthplace of Lord Buddha. Offers a serene and peaceful atmosphere with a blend of cultural heritage making it an unforgettable experience.</p>
-      </div>
-    </div>
-
+    <?php }
+      ?>
   </section>
 
   <!-- Footer -->
