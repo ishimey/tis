@@ -17,7 +17,17 @@ $conn = mysqli_connect("localhost", "root", "", "tourism");
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-    }
+      ←
+      ￼
+      ￼ ￼ ￼ ￼ ￼ ￼
+      ￼Recent￼Favourites
+      ￼ ￼
+      ￼New
+      ￼￼barber_point
+      ￼￼information_schema
+      ￼￼Library
+      ￼￼LMS
+      ￼￼medpoint}
 
     body {
       background: linear-gradient(to right, #e0f7fa, #f0f0f5);
@@ -98,20 +108,15 @@ $conn = mysqli_connect("localhost", "root", "", "tourism");
 
     /* ===== Section Title ===== */
     .section-title {
-      display: inline-block;
       padding: 20px 50px;
+      color: white;
       font-size: 36px;
       font-weight: 700;
       text-align: center;
-      border-radius: 16px;
       margin: 50px auto 30px;
-      position: relative;
-      overflow: hidden;
       box-shadow: 0 12px 35px rgba(0,0,0,0.25);
       background: linear-gradient(270deg, #DC143C, #003893, #DC143C);
       background-size: 600% 600%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       animation: gradientMove 6s ease infinite;
     }
 
@@ -253,18 +258,18 @@ $conn = mysqli_connect("localhost", "root", "", "tourism");
   <nav>
     <ul>
       <li><a href="index.php">Home</a></li>
-     
+
       <li><a href="contacts.php">Contact</a></li>
       <?php if (isset($_SESSION["username"])) { ?>
         <li class="username"><?php echo $_SESSION["username"]; ?></li>
         <li><a href="logout.php">Logout</a></li>
       <?php } else { ?>
-        
+
       <?php } ?>
     </ul>
   </nav>
 
-  
+
   <!-- About Section -->
   <section class="about-section">
     <p>Welcome to our <span class="highlight">Tourism Information System</span>, your complete guide to exploring the natural beauty and cultural richness of Nepal. Our platform provides travelers, tourists, and locals with comprehensive details about destinations, hotels, activities, and cultural events.</p>
@@ -282,14 +287,19 @@ $conn = mysqli_connect("localhost", "root", "", "tourism");
       $result = mysqli_query($conn, $sql);
       while ($row = mysqli_fetch_assoc($result)) { ?>
         <div class="card">
-          <img src="<?php echo $row["imageURL"]; ?>" alt="<?php echo $row["destination"]; ?>">
+          <img src="<?php echo $row["imageURL"]; ?>" alt="<?php echo $row[
+    "destination"
+]; ?>">
           <div class="card-content">
             <h3><?php echo $row["destination"]; ?></h3>
             <p><?php echo $row["description"]; ?></p>
-            <a href="destinations.php?query=<?php echo $row["destinationID"]; ?>">View More</a>
+            <a href="destinations.php?query=<?php echo $row[
+                "destinationID"
+            ]; ?>">View More</a>
           </div>
         </div>
-      <?php } ?>
+      <?php }
+      ?>
   </section>
 
   <!-- Footer -->

@@ -1,25 +1,3 @@
-
-
-   <?php
-$conn = mysqli_connect("localhost", "root", "", "tourism");
-
-if (isset($_GET["query"])) {
-    $destinationID = $_GET["query"];
-    $sql = "SELECT * FROM destination WHERE destinationID = '$destinationID'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-?>
-    <div class="destination-details">
-        <img src="<?php echo $row["imageURL"]; ?>" alt="">
-        <h2><?php echo $row["destination"]; ?></h2>
-        <p><?php echo $row["description"]; ?></p>
-    </div>
-<?php
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +25,7 @@ body{
 }
 
 /* Header */
-.header{
+.header,.footer{
     background:linear-gradient(135deg, var(--blue), var(--red));
     padding:60px 20px;
     text-align:center;
@@ -73,8 +51,8 @@ body{
 
 /* Grid */
 .destinations{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    display:flex;
+    flex-direction:column;
     gap:30px;
 }
 
@@ -137,64 +115,42 @@ body{
 
 <body>
 
-<div class="header">
-    <h1>Top Destinations in Chitwan</h1>
-    <p>Explore the beauty, culture, and heritage of Chitwan</p>
-</div>
+<?php
+$conn = mysqli_connect("localhost", "root", "", "tourism");
 
+if (isset($_GET["query"])) {
+
+    $destinationID = $_GET["query"];
+    $sql = "SELECT * FROM destination WHERE destinationID = '$destinationID'";
+    $sqlAttractions = "SELECT * FROM attractions where destinationID = '$destinationID'";
+    $result = mysqli_query($conn, $sql);
+    $resultAttractions = mysqli_query($conn, $sqlAttractions);
+    $row = mysqli_fetch_assoc($result);
+    ?>
+ <div class="header">
+     <h1>Top destinations in <?php echo $row["destination"]; ?></h1>
+ </div>
+<?php
+}
+?>
 <div class="container">
     <div class="destinations">
 
+        <?php while ($rows = mysqli_fetch_assoc($resultAttractions)) { ?>
         <div class="card">
-            <img src="images/kathmandu.jpg" alt="Kathmandu">
+            <img src="<?php echo $rows["imageURL"]; ?>" alt="Kathmandu">
             <div class="card-content">
-                <h3>Kathmandu</h3>
+                <h3><?php echo $rows["name"]; ?></h3>
                 <p>
-                    Kathmandu, the capital city of Nepal, is rich in history,
-                    temples, and cultural heritage.
+                <?php echo $rows["description"]; ?>
                 </p>
-                <a href="#" class="btn">Explore</a>
             </div>
         </div>
-
-        <div class="card">
-            <img src="images/pokhara.jpg" alt="Pokhara">
-            <div class="card-content">
-                <h3>Pokhara</h3>
-                <p>
-                    Pokhara is famous for its lakes, mountain views,
-                    adventure sports, and natural beauty.
-                </p>
-                <a href="#" class="btn">Explore</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="images/chitwan.jpg" alt="Chitwan">
-            <div class="card-content">
-                <h3>Chitwan</h3>
-                <p>
-                    Chitwan is known for Chitwan National Park,
-                    wildlife safari, and Tharu culture.
-                </p>
-                <a href="#" class="btn">Explore</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="images/lumbini.jpg" alt="Lumbini">
-            <div class="card-content">
-                <h3>Lumbini</h3>
-                <p>
-                    Lumbini is the birthplace of Lord Buddha
-                    and an important spiritual destination.
-                </p>
-                <a href="#" class="btn">Explore</a>
-            </div>
-        </div>
-
+        <?php } ?>
     </div>
 </div>
-
+<div class="footer" >
+    <p><?php echo $row["description"]; ?></p>
+</div>
 </body>
 </html>
